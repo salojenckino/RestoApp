@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<html lang="en"  xmlns="http://www.thymeleaf.org">
+
+    <head>
+        <title>Menu</title>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    
+    </head>
+
+    <body>
+        <section style="height:100%">
+            <div class="card">
+                <div class="card-header">
+                    Menu
+                </div>
+                <!-- Variables que estan cargadas segun ModelMap
+                model.put("platos", platos);
+                model.put("idResto", idResto);
+                model.put("carrito",carritoId);
+                -->
+                <div class="card-body">
+                    <p class="error" th:if= "${error != null}" th:text = ${error} style="color: red"></p>
+                    <p class="exito" th:if= "${exito != null}" th:text = ${exito} style="color: green"></p>
+
+                        <div class="row menu-container">
+                            <!--TODOS SIN FILTROS-->
+                            <table class="table table-light table-hover">
+                                <thead>
+                                    <tr class="bg-blue">
+                                        <td>Nombre</td>
+                                        <td>Precio</td>
+                                        <td>Ver</td>
+                                    </tr>
+                                </thead>
+                                <tbody th:each="plato :${platos}">
+                                    <tr>
+                                        <td th:text="${plato.nombre}"></td>
+                                        <td th:text="${plato.precio}"></td>
+                                        <td><a th:href="${'/plato/verPlato/'+plato.id+'/'+carritoId}" class="btn btn-success btn-xl">Ver</a></td>
+                                    </tr>
+                                </tbody>   
+                            </table> 
+                        </div>  
+                        <a th:href="${'/reserva/crearReserva/'+carritoId}" class="btn btn-warning btn-xl" sec:authorize="hasAnyRole('ROLE_USER','ROLE_ADMIN')">Reservar</a>  
+                </div>
+            </div>
+    
+            <div >
+                <a th:href="${'/carrito/verCarrito/'+ session.usuariosession.id}" class="btn btn-primary btn-xl" sec:authorize="hasAnyRole('ROLE_USER','ROLE_ADMIN')">Ver Carrito</a>                            
+                <a th:href="${'/?id=' + carritoId}" class="btn btn-primary btn-xl">Volver</a><span>Al volver se perdera lo guardado en el carrito</span>
+            </div>
+        </section>
+    </body>
+</html>

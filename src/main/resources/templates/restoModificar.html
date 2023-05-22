@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.thymeleaf.org">
+
+<head>
+    <title>Zona</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+</head>
+
+<body>
+    <br>
+    <!-- Esta linea de spam me genera el texto que es dinamico, si es null va a poner 'Crear' si no es nulo me va a poner 'Actualizar'-->
+    <h2>Datos del resto</h2>
+
+
+
+    <div class="container">
+        <div class="card-body">
+            <form action="/resto/restoModificado" method="POST" enctype="multipart/form-data">
+
+                <p class="error" th:if="${error != null}" th:text=${error} style="color: red"></p>
+                <p class="exito" th:if="${exito != null}" th:text=${exito} style="color: green"></p>
+                
+                <input type="hidden" name="idUsuario" th:value="${session.usuariosession.id}"/>
+
+                <div class="mb-3">
+                    <label class="form-label">Ingrese el nombre de su Restaurante</label>
+                    <input type="text" class="form-control" name="nombre" th:value="${resto.nombre}" placeholder="Ingrese el nombre aqui" required>
+
+                </div>
+
+                <div>
+                    <label for="exampleInputEmail1" class="form-label">Seleccione la zona donde se ubica su local</label>
+                   <select class="form-select" name="idZona" aria-label="Default select example">
+                     <option th:each="zona : ${zonas}" th:if="${zona.alta!=false}" th:value="${zona.id}" th:text="${zona.nombre}" ></option> 
+                  </select>
+                </div> 
+
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Ingrese el logo del restaurante</label>
+                    <input type="file" class="form-control" name="archivo">
+                </div>
+
+                <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                <a href="/" class="btn btn-primary btn-xl">Volver</a>
+
+            </form>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

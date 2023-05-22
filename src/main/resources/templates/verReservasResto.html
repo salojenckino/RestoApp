@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.thymeleaf.org">
+
+<head>
+    <title>Reservas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="conteiner">
+        <main>
+            <div class="px-3 py-3">
+                <h1>Lista de reservas</h1>
+                <p class="error" th:if="${error != null}" th:text=${error} style="color: red"></p>
+                <p class="exito" th:if="${exito != null}" th:text=${exito} style="color: green"></p>
+                <table class="table table-light table-hover">
+                    <thead>
+                        <tr class="bg-blue">
+                            <th>Cliente Nombre</th>
+                            <th>Dia</th>
+                            <th>Mesa</th>
+                            <th>Cantidad de Personas</th>
+                            <th>Dar baja reserva</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="reserva : ${reservas}">
+                            <td th:text="${reserva.usuario.nombre}+${reserva.usuario.apellido}"></td>
+                            <td th:text="${reserva.dia}"></td>
+                            <td th:text="${reserva.mesa.denominacion}"></td>
+                            <td th:text="${reserva.cantidad}"></td>
+                            <td> 
+                             <a th:href="@{/reserva/darBajaReservaResto/}+${reserva.id}" class="btn btn-danger btn-xl">Baja</a>
+                            </td>
+                          
+                          
+                        </tr>
+                    </tbody>
+                </table>
+                <a href="/" class="btn btn-primary btn-xl">Volver</a>
+               
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>

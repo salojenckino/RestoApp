@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+
+<html lang="Esta" xmlns="http://www.thymeleaf.org">
+
+<head>
+    <title>Zona</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+</head>
+
+<body>
+    <br>
+ <!-- Esta linea de spam me genera el texto que es dinamico, si es null va a poner 'Crear' si no es nulo me va a poner 'Actualizar'-->
+ <h2>Encontra el resto que tiene tu plato preferido</h2>
+    
+ <p class="error" th:if="${error != null}" th:text=${error} style="color: red"></p>
+ <p class="exito" th:if="${exito != null}" th:text=${exito} style="color: green"></p>
+ <a href="/" class="btn btn-primary btn-xl">Volver</a>
+    <div class="container">
+        <div class="card-body">
+            <form action="/buscador/resultadoBusquedaResto" method="POST">
+              <input type="search" name="busquedaResto" placeholder="Buscá tu plato . ."pattern="[A-Za-z0-9]{4,20}">
+              <input type="submit" value="Ver">         
+            </form>
+            <section>
+                <div class="row row-cols-1 row-cols-md-3 g-4" th:if="${session.usuariosession != null}" sec:authorize="hasAnyRole('ROLE_USER','ROLE_ADMIN')">
+                    <div th:each="restoBuscado :${restosbuscados}" class="container"  >
+                        <!-- cartas de los diferentes restaruantes-->
+                        <div class="flex-item">
+                            <div class="card" style="width: 18rem;">
+                                <!-- <img src="iconoresto.jpeg" class="card-img-top" alt="Aca iba una imagen muy copada"> -->
+                                <img th:if="${restoBuscado.foto != null}" th:src="${'/foto/restoFoto/' + restoBuscado.id}" class="card-img-top" alt="...">
+                                <img th:if="${restoBuscado.foto == null}" src="../static/blue.jpg" class="card-img-top" alt="...">
+                                <div class="card-body">
+                                    <p class="card-title" th:text="${restoBuscado.nombre}"></p>
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">Abierto: <span th:text="${restoBuscado.abierto}"></span></li>
+                                    <!-- <li class="list-group-item">Mesas Disponibles: <span th:text="${Restaurante.mesas}"></span></li> -->
+                                    <li class="list-group-item">Ubicacion: <span th:if="${restoBuscado.zona != null}" th:text="${restoBuscado.zona.nombre}"></span></li>
+                                </ul>
+                                <div class="card-body">
+                                    <!-- <a class="btn btn-success" th:href="@{/Reserva/crearReserva/} + ${Restaurante.id}">Reservar <i class="fa fa-edit"></i></a> -->
+                                    <a class="btn btn-success" sec:authorize="hasRole('ROLE_USER')" th:href="${'/resto/menu/'+restoBuscado.id+'/'+0}">Ver Menu <i class="fa fa-edit"></i></a>
+                                </div>                                                                 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

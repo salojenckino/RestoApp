@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.thymeleaf.org">
+
+<head>
+    <title>Usuario</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+</head>
+
+<body>
+    <br>
+ <!-- Esta linea de spam me genera el texto que es dinamico, si es null va a poner 'Crear' si no es nulo me va a poner 'Actualizar'-->
+ <h2>CREE SU USUARIO</h2>
+    
+    <div class="container">
+        <div class="card-body">
+            <form action="/registrarUsuario" method="POST">
+
+                <p class="error" th:if="${error != null}" th:text=${error} style="color: red"></p>
+                <p class="exito" th:if="${exito != null}" th:text=${exito} style="color: green"></p>
+                <!--<input type="hidden" th:if="${!zona.id==null}" name="id" th:value="${zona.id}"/>  --> 
+
+                <div class="mb-3">
+                    <label class="form-label">Ingrese su nombre</label>
+                    <input type="text" class="form-control" name="nombre" placeholder="Ingrese el nombre" th:value="${nombre}" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Ingrese su apellido</label>
+                    <input type="text" class="form-control" name="apellido" placeholder="Ingrese su apellido" th:value="${apellido}" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Ingrese su email</label>
+                    <input type="email" class="form-control" name="mail" placeholder="Ingrese su email" th:value="${mail}" required>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Ingrese su clave</label>
+                    <input type="password" class="form-control" name="clave1" required>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Repita su clave</label>
+                    <input type="password" class="form-control" name="clave2" required>
+                </div>
+                 
+                <button type="submit" class="btn btn-primary">Enviar</button>
+                <a href="/registro" class="btn btn-primary btn-xl">Volver</a>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
